@@ -1,8 +1,9 @@
 *.txt
 *.jpg
+*.xml
 *.png
 testfile
-.idea
+.idea/*.*
 
 # Compiled class file
 *.class

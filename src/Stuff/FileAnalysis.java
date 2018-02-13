@@ -55,7 +55,8 @@ public class FileAnalysis
     private static CounterData countAllFiles(File directory, int level)
     {
         File[] files = directory.listFiles();
-        assert files != null : "path error";
+        if (files == null)
+            throw new RuntimeException("path error");
 
         CounterData count = new CounterData();
         for (File file : files)
