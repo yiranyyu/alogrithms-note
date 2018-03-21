@@ -23,5 +23,5 @@ public class Quick extends SortBase
         sort_iter(a, lo, v - 1);
         sort_iter(a, v + 1, hi);
     }
-
+    
 }

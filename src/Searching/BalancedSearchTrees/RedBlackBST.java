@@ -634,8 +634,13 @@ public class RedBlackBST<Key extends Comparable<Key>, Value>
     {
         RedBlackBST<Integer, Integer> rb_bst = new RedBlackBST<>();
 
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < 1023; ++i)
+        {
             rb_bst.put(2*i + 1, i);
+            rb_bst.drawAndShow();
+            StdDraw.pause(20);
+            StdDraw.clear();
+        }
         for (int i = 0; i < 10; ++i)
             System.out.println(rb_bst.rank(i));
         System.out.println("-----------------------");

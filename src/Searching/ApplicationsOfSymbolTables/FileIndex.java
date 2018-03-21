@@ -1,20 +1,24 @@
 package Searching.ApplicationsOfSymbolTables;
 
 import Searching.BalancedSearchTrees.RedBlackBST;
+import edu.princeton.cs.algs4.Bag;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
 
 public class FileIndex
 {
-    private static RedBlackBST<String, LinearSet<File>> st;
+    private static RedBlackBST<String, Bag<File>> st;
     private static RedBlackBST<String, File> fileSt;
     private static String[] fileNames;
 
     public static void main(String[] argv)
     {
-        fileNames = argv;
+        fileNames = new String[1];
+        fileNames[0] = "C:\\mingw64\\lib\\gcc\\x86_64-w64-mingw32\\7.1.0\\include\\c++";
         init();
         printGuideMsg();
         readAndProcessRequest();
@@ -66,6 +70,8 @@ public class FileIndex
     {
         System.out.println("Processing Directory " + dir.getAbsolutePath());
         File[] files = dir.listFiles();
+        if (files == null)
+            throw new DirectoryIteratorException(new IOException("cannot list file of " + dir));
         try
         {
             for (File file : files)
@@ -85,16 +91,17 @@ public class FileIndex
     private static void doReadImp(File file)
     {
         In in = new In(file);
-        if (!fileSt.contains(file.getName())) fileSt.put(file.getName(), file);
+        if (!fileSt.contains(file.getName()))
+            fileSt.put(file.getName(), file);
         while (!in.isEmpty())
         {
-            String[] words = in.readString().split("[(){}\\[\\]<>,!&^%$*.~@'\";:+\\-=/#]");
+            String[] words = in.readString().split("[(){} \\[\\]<>,!&^%$*.~@'\";:+\\-=/#]");
 
             for (String word : words)
             {
-                if (!st.contains(word)) st.put(word, new LinearSet<>());
-                LinearSet<File> set = st.get(word);
-                set.add(file);
+                if (!st.contains(word))
+                    st.put(word, new Bag<>());
+                st.get(word).add(file);
             }
         }
     }

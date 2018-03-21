@@ -19,9 +19,9 @@ public class Insertion extends SortBase
         {
             int j = i-1;
             Comparable cur = a[i];
-            for (; j >= start && less(cur, a[j]); --j) // 大于 cur 的往右挪一位
+            for (; j >= start && less(cur, a[j]); --j) // move to right for one step for elements larger than cur
                 a[j+1] = a[j];
-            a[j+1] = cur; //把 cur放到空处
+            a[j+1] = cur; // move cur to blank
         }
     }
 

@@ -72,12 +72,13 @@ public class LinearSet<Value extends Comparable<Value>>
 
     private void assertNotNull(Object o)
     {
-        if (o == null) throw new IllegalArgumentException("calls with null value");
+        if (o == null)
+            throw new IllegalArgumentException("calls with null value");
     }
 
     private int indexOf(Value val)
     {
-        return Arrays.binarySearch(values, val);
+        return Arrays.binarySearch(values, 0, N, val);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class LinearSet<Value extends Comparable<Value>>
         class LinearSetIterator
             implements Iterator<Value>
         {
-            int cur = 0;
+            private int cur = 0;
             @Override
             public boolean hasNext()
             {

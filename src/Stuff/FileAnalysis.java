@@ -4,29 +4,55 @@ package Stuff;
 import Fundamentals.Bags_Queues_Stacks.List;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class FileAnalysis
 {
     private static String[] selectPatterns;
     private static String[] ignorePatterns;
 
-
     public static void main(String[] argv)
     {
-        String DirectoryName = "G:\\Code\\Algorithms note\\Code";
+        Scanner in = new Scanner(System.in);
+        System.out.println("Directory: ");
+        String DirectoryName = in.nextLine();
 
-        List<String> patterns = new List<>();
-        patterns.push(".java");
+        List<String> patterns = readSelectPatterns();
         setSelectPatterns(patterns);
 
-        List<String> ignorePatterns = new List<>();
-        ignorePatterns.push("algs");
-        ignorePatterns.push("Scheme");
-        ignorePatterns.push("CMake");
+        List<String> ignorePatterns = readIgnorePatterns();
         setIgnorePatterns(ignorePatterns);
 
         CounterData data = countAllFiles(new File(DirectoryName), 0);
         System.out.println("total : " + data);
+    }
+
+    private static List<String> readSelectPatterns()
+    {
+        Scanner in = new Scanner(System.in);
+        List<String> patterns = new List<>();
+
+        System.out.println("input select patterns(empty if want all): ");
+        String line = in.nextLine();
+        String[] words = line.split("[ ]");
+        for (String word : words)
+            if (word.length() > 0)
+                patterns.push(word);
+        return patterns;
+    }
+
+    private static List<String> readIgnorePatterns()
+    {
+        Scanner in = new Scanner(System.in);
+        List<String> patterns = new List<>();
+
+        System.out.println("input ignore patterns(empty if want all): ");
+        String line = in.nextLine();
+        String[] words = line.split("[ ]");
+        for (String word : words)
+            if (word.length() > 0)
+                patterns.push(word);
+        return patterns;
     }
 
     private static void setSelectPatterns(List<String> patterns)
@@ -163,10 +189,7 @@ public class FileAnalysis
             if (this.words > that.words) return 1;
             if (this.words < that.words) return -1;
 
-            if (this.chars > that.chars) return 1;
-            if (this.chars < that.chars) return -1;
-
-            return 0;
+            return Integer.compare(this.chars, that.chars);
         }
     }
 }
